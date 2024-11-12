@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\CrudInterface;
 use App\Repositories\BlogRepository;
 use App\Traits\ResponseTrait;
 use Exception;
@@ -12,7 +13,7 @@ class BlogController extends Controller
 {
     use ResponseTrait;
 
-    public function __construct(private readonly BlogRepository $blogRepository)
+    public function __construct(private readonly CrudInterface $crudOperation)
     {
         
     }
@@ -25,7 +26,7 @@ class BlogController extends Controller
         try{
             // $blogs = new BlogRepository();
             // return $this->successResponse($blogs->getAll(), "Fetched Successfuly....!!!");
-            return $this->successResponse($this->blogRepository->getAll(), "Fetched Successfuly....!!!");
+            return $this->successResponse($this->crudOperation->getAll(), "Fetched Successfuly....!!!");
         }catch(Exception $e) {
             return $this->errorResponse([], $e->getMessage());
         }
